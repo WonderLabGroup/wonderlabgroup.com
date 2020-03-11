@@ -1,0 +1,12 @@
+language: python
+python: 3.5
+deploy:
+  provider: s3
+  access_key_id:
+  secret_access_key:
+  bucket: wonderlabgroup.com
+  on:
+    branch: master
+  skip_cleanup: true
+  after_deploy:
+  - aws cloudfront create-invalidation --distribution-id E35YJ5690WRXT1 --paths '/*'

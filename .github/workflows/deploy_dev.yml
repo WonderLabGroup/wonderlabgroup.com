@@ -20,5 +20,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-    - name: Deploy to AWS S3
-      run: aws s3 sync ${{ github.workspace }}/ s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
+      - name: Deploy to AWS S3
+        run: aws s3 sync ${{ github.workspace }}/ s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete

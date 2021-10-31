@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ dev ]
 
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 env:
@@ -13,12 +14,20 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
   AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
 
-      - name: Deploy to AWS S3
-        run: aws s3 sync ${{ github.workspace }} s3://${{ secrets.DEV_AWS_S3_BUCKET }} --acl public-read --delete --cache-control max-age=604800
+      - name: Deploy
+        uses: reggionick/s3-deploy@v1
+        with:
+          folder: .
+          bucket: ${{ secrets.DEV_AWS_S3_BUCKET }}
+          dist-id: ${{ secrets.DEV_AWS_CLOUDFRONT_DISTRIBUTION_ID }}

@@ -21,4 +21,4 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Deploy to AWS S3
-        run: aws s3 sync ${{ github.workspace }} s3://dev.wonderlabgroup.com --acl public-read --delete --cache-control max-age=604800
+        run: aws s3 sync ${{ github.workspace }} s3://dev.wonderlabgroup.com --delete --cache-control max-age=604800

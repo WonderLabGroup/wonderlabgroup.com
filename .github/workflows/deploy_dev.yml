@@ -22,3 +22,12 @@ jobs:
 
       - name: Deploy to AWS S3
         run: aws s3 sync ${{ github.workspace }}/ s3://${{ secrets.DEV_AWS_S3_BUCKET }} --delete
+
+      - name: Purge cache
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.DEV_AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+          PATHS: '/*'
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
